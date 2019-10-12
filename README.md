@@ -1,5 +1,7 @@
 # Rofi web search
 
+[![Demo](./demo/screencast.gif)](https://youtu.be/2o1t_vuU6LU)
+
 ## General description
 
 This simple script is aimed to have something like Spotlight on OSX to make a
