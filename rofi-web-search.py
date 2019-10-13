@@ -18,17 +18,21 @@ import html
 #####                      C O N F I G U R A T I O N                      ######
 ################################################################################
 SEARCH_ENGINE = 'google'    # or 'duckduckgo'
-BROWSER = 'chrome'          # or 'firefox'
+BROWSER = 'chrome'          # or 'firefox' 'chromium' 'brave'
 ################################################################################
 
 CONFIG = {
     'BROWSER_PATH' : {
         'chrome' : '/usr/bin/google-chrome-stable',
-        'firefox' : '/usr/bin/firefox'
+        'firefox' : '/usr/bin/firefox',
+        'chromium' : '/usr/bin/chromium-browser',
+        'brave' : '/usr/bin/brave-browser'
     },
     'USER_AGENT' : {
         'chrome' : 'Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
-        'firefox' : 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0'
+        'firefox' : 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0',
+        'chromium' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/76.0.3809.100 Chrome/76.0.3809.100 Safari/537.36',
+        'brave' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
     },
     'SEARCH_ENGINE_NAME' : {
         'google' : 'Google',

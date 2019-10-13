@@ -32,7 +32,7 @@ or libraries are required.
 The script can be configured editing the first couple of lines. You can choose
 the browser to use and the search engine.
 
-Supported browsers are Google Chrome and Firefox. Supported search engines are
+Supported browsers are Google Chrome, Firefox, Brave, and Chromium. Supported search engines are
 Google and DuckDuckGo. Just open the script and edit the two variables
 `SEARCH_ENGINE` and `BROWSER` at the geginning of the script.
 
