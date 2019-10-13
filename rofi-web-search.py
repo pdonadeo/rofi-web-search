@@ -7,6 +7,7 @@ import urllib.request
 import sys
 import os
 import datetime
+import gzip
 
 import subprocess as sp
 
@@ -61,7 +62,7 @@ def fetch_suggestions(search_string):
         headers = {
             'sec-fetch-mode' : 'cors',
             'dnt' : '1',
-            'accept-encoding' : 'gzip, deflate, br',
+            'accept-encoding' : 'gzip',
             'accept-language' : 'en-US;q=0.9,en;q=0.8',
             'pragma' : 'no-cache',
             'user-agent' : CONFIG['USER_AGENT'][BROWSER],
@@ -71,9 +72,9 @@ def fetch_suggestions(search_string):
             'referer' : 'https://www.google.com/',
             'sec-fetch-site' : 'same-origin'
         }
-        req = urllib.request.Request(url, headers={}, method='GET')
+        req = urllib.request.Request(url, headers=headers, method='GET')
 
-        reply_data = urllib.request.urlopen(req).read().split(b'\n')[1]
+        reply_data = gzip.decompress(urllib.request.urlopen(req).read()).split(b'\n')[1]
         reply_data = json.loads(reply_data)
         return [ cleanhtml(res[0]).strip() for res in reply_data[0] ]
     else:   # 'duckduckgo'
@@ -87,7 +88,7 @@ def fetch_suggestions(search_string):
         headers = {
             'pragma' : 'no-cache',
             'dnt' : '1',
-            'accept-encoding' : 'gzip, deflate, br',
+            'accept-encoding' : 'gzip',
             'accept-language' : 'en-US;q=0.9,en;q=0.8',
             'user-agent' : CONFIG['USER_AGENT'][BROWSER],
             'sec-fetch-mode' : 'no-cors',
@@ -97,8 +98,8 @@ def fetch_suggestions(search_string):
             'referer' : 'https://duckduckgo.com/',
             'sec-fetch-site' : 'same-origin',
         }
-        req = urllib.request.Request(url, headers={}, method='GET')
-        reply_data = urllib.request.urlopen(req).read().decode('utf8')
+        req = urllib.request.Request(url, headers=headers, method='GET')
+        reply_data = gzip.decompress(urllib.request.urlopen(req).read()).decode('utf8')
         reply_data = json.loads(re.match(r'autocompleteCallback\((.*)\);', reply_data).group(1))
         return [ cleanhtml(res['phrase']).strip() for res in reply_data ]
 
