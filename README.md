@@ -17,6 +17,11 @@ Suggestions will be listed by Rofi and you can select one of them or refine your
 search using `CTRL+ENTER` (this is the standard Rofi binding) to copy the
 selected line into the input field, then add a `!` and press `ENTER` again.
 
+When you are using DuckDuckGo you can also use the
+[bangs search](https://duckduckgo.com/bang), starting the search with a `!` and
+optionally closing it with a `!` to get suggestions, as usual.
+
+
 ## Requirements
 
 The only requirements are Rofi (of course...) and Python 3. No external packages
