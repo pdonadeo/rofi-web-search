@@ -78,6 +78,11 @@ def fetch_suggestions(search_string):
         reply_data = json.loads(reply_data)
         return [ cleanhtml(res[0]).strip() for res in reply_data[0] ]
     else:   # 'duckduckgo'
+        if search_string.startswith('!'):
+            bang_search = True
+            search_string = search_string.lstrip('!')
+        else:
+            bang_search = False
         r = {
             'q' : search_string,
             'callback' : 'autocompleteCallback',
@@ -85,6 +90,8 @@ def fetch_suggestions(search_string):
             '_' : str(int((datetime.datetime.now().timestamp())*1000))
         }
         url = CONFIG['SUGGESTION_URL'][SEARCH_ENGINE] + urllib.parse.urlencode(r)
+        if bang_search:
+            url = url.replace('?q=', '?q=!')
         headers = {
             'pragma' : 'no-cache',
             'dnt' : '1',
@@ -107,7 +114,7 @@ def main():
     search_string = html.unescape((' '.join(sys.argv[1:])).strip())
 
     if search_string.endswith('!'):
-        search_string = search_string.strip('!').strip()
+        search_string = search_string.rstrip('!').strip()
         results = fetch_suggestions(search_string)
         for r in results:
             print(html.unescape(r))
