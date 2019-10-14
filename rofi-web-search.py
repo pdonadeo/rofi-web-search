@@ -17,22 +17,25 @@ import html
 ################################################################################
 #####                      C O N F I G U R A T I O N                      ######
 ################################################################################
-SEARCH_ENGINE = 'google'    # or 'duckduckgo'
-BROWSER = 'chrome'          # or 'firefox' 'chromium' 'brave'
+SEARCH_ENGINE = 'google'            # or 'duckduckgo'
+BROWSER = 'chrome'                  # or 'firefox', 'chromium', 'brave', 'lynx'
+TERMINAL = ['gnome-terminal', '--'] # or ['st', '-e'] or something like that
 ################################################################################
 
 CONFIG = {
     'BROWSER_PATH' : {
-        'chrome' : '/usr/bin/google-chrome-stable',
-        'firefox' : '/usr/bin/firefox',
-        'chromium' : '/usr/bin/chromium-browser',
-        'brave' : '/usr/bin/brave-browser'
+        'chrome' : ['google-chrome-stable'],
+        'firefox' : ['firefox'],
+        'chromium' : ['chromium-browser'],
+        'brave' : ['brave-browser'],
+        'lynx' : TERMINAL + ['lynx']
     },
     'USER_AGENT' : {
         'chrome' : 'Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
         'firefox' : 'Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0',
         'chromium' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/76.0.3809.100 Chrome/76.0.3809.100 Safari/537.36',
-        'brave' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
+        'brave' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36',
+        'lynx' : 'Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/1.1.1d'
     },
     'SEARCH_ENGINE_NAME' : {
         'google' : 'Google',
@@ -127,7 +130,7 @@ def main():
         print('!!-- Close your search string with "!" to get search suggestions')
     else:
         url = CONFIG['SEARCH_URL'][SEARCH_ENGINE] + urllib.parse.quote_plus(search_string)
-        sp.Popen([CONFIG['BROWSER_PATH'][BROWSER], url], stdout=sp.DEVNULL, stderr=sp.DEVNULL, shell=False)
+        sp.Popen(CONFIG['BROWSER_PATH'][BROWSER] + [url], stdout=sp.DEVNULL, stderr=sp.DEVNULL, shell=False)
 
 if __name__ == "__main__":
     try:
