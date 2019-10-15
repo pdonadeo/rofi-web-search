@@ -21,7 +21,6 @@ When you are using DuckDuckGo you can also use the
 [bangs search](https://duckduckgo.com/bang), starting the search with a `!` and
 optionally closing it with a `!` to get suggestions, as usual.
 
-
 ## Requirements
 
 The only requirements are Rofi (of course...) and Python 3. No external packages
@@ -30,15 +29,37 @@ or libraries are required.
 ## Configuration
 
 The script can be configured editing the first couple of lines. You can choose
-the browser to use and the search engine.
+the browser, search engine, and terminal (if using Lynx browser).
 
-Supported browsers are Google Chrome, Firefox, Brave, and Chromium. Supported search engines are
-Google and DuckDuckGo. Just open the script and edit the two variables
-`SEARCH_ENGINE` and `BROWSER` at the geginning of the script.
+Supported browsers are Google Chrome, Firefox, Brave, Chromium, and Lynx.
+
+Supported search engines are Google and DuckDuckGo.
+
+If using Lynx, the supported browsers are `st` and `gnome-terminal`
+
+Just open the script and edit the necessary variables:
+
+`SEARCH_ENGINE`
+
+* google
+* duckduckgo
+
+`BROWSER`
+
+* chrome
+* firefox
+* chromium
+* brave
+* lynx
+
+`TERMINAL`
+
+* st
+* gnome-terminal
 
 In i3 you can bind the script in the usual way, for example this is my
 configuration:
 
-```
+```bash
 bindsym --release $mod+x exec --no-startup-id rofi -lines 10 -padding 0 -show search -modi search:~/bin/rofi-web-search.py -i -p "Search: "
 ```
