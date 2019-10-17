@@ -132,8 +132,50 @@ def main():
         url = CONFIG['SEARCH_URL'][SEARCH_ENGINE] + urllib.parse.quote_plus(search_string)
         sp.Popen(CONFIG['BROWSER_PATH'][BROWSER] + [url], stdout=sp.DEVNULL, stderr=sp.DEVNULL, shell=False)
 
+def validate_config(c):
+    if type(c) != dict:
+        print('Configuration file must be a JSON object', file=sys.stderr)
+        sys.exit(1)
+    for k in ('SEARCH_ENGINE', 'BROWSER', 'TERMINAL'):
+        if k not in c:
+            print('Configuration file is missing %s' % k, file=sys.stderr)
+            sys.exit(1)
+    for k in ('SEARCH_ENGINE', 'BROWSER'):
+        if type(c[k]) != str:
+            print('Configuration Error: The value of %s must be a string' % k, file=sys.stderr)
+    if type(c['TERMINAL']) != list:
+        print('Configuration Error: The value of TERMINAL must be a list of strings', file=sys.stderr)
+        sys.exit(1)
+    for x in c['TERMINAL']:
+        if type(x) != str:
+            print('Configuration Error: The value of TERMINAL must be a list of strings', file=sys.stderr)
+            sys.exit(1)
+
 if __name__ == "__main__":
     try:
+        fname = os.path.expanduser('~/.config/rofi-web-search/config.json')
+        if os.path.exists(fname):
+            try:
+                config = json.loads(open(fname, 'r').read())
+            except json.JSONDecodeError:
+                print('Configuration file %s is not a valid JSON' % fname, file=sys.stderr)
+                sys.exit(1)
+            validate_config(config)
+            SEARCH_ENGINE = config['SEARCH_ENGINE']
+            BROWSER = config['BROWSER']
+            TERMINAL = config['TERMINAL']
+        else:
+            # Create default config
+            config = {
+                    'SEARCH_ENGINE' : SEARCH_ENGINE,
+                    'BROWSER' : BROWSER,
+                    'TERMINAL' : TERMINAL
+                }
+            os.makedirs(os.path.dirname(fname))
+            f = open(fname, 'w')
+            f.write(json.dumps(config, indent=4))
+            f.write('\n')
+            f.close()
         main()
     except:
         sys.exit(1)
